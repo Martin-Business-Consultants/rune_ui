@@ -29,10 +29,12 @@
   --lexxy-color-code-token-selector: light-dark(#22863a, #85e89d);
 }
 
+/* A box, not a control: it takes the box radius (scaled by --radius-scale), never the control's,
+/* which round corners make a pill. */
 lexxy-editor {
   display: block;
   border: 1px solid var(--line-strong);
-  border-radius: var(--radius-control);
+  border-radius: var(--radius-lg);
   background: var(--panel);
   color: var(--text);
   min-height: 8rem;
