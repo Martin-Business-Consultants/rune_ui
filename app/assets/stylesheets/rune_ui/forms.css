@@ -23,7 +23,7 @@
   .field > label, .field__label { font-weight: var(--weight-strong); }
   .field__hint { color: var(--text-faint); font-size: var(--text-meta); line-height: var(--leading-tight); }
   .field__error { color: var(--danger); font-size: var(--text-meta); line-height: var(--leading-tight); }
-  .field--inline { flex-direction: row; align-items: center; gap: var(--s-2); }
+  .field--inline { display: flex; flex-direction: row; align-items: center; gap: var(--s-2); }
 
   /* Fields side by side, one column on a narrow screen. */
   .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: var(--s-4); }
