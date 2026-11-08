@@ -21,5 +21,12 @@ export default class extends Controller {
 
   close() { this.dialogTarget.close() }
 
-  backdrop(event) { if (event.target === this.dialogTarget) this.close() }
+  // A click on the backdrop lands on the <dialog> itself, outside its box. So does one on the
+  // empty part of a box its content doesn't fill (a sheet's lower half), which stays open.
+  backdrop(event) {
+    if (event.target !== this.dialogTarget) return
+    const box = this.dialogTarget.getBoundingClientRect()
+    const inside = event.clientX >= box.left && event.clientX <= box.right && event.clientY >= box.top && event.clientY <= box.bottom
+    if (!inside) this.close()
+  }
 }
