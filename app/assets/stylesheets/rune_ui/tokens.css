@@ -60,6 +60,14 @@
     --radius-control: var(--radius-sm);
     --radius-pill: 999px;
     --ease: cubic-bezier(.2, .8, .2, 1);
+    /* Motion: everything that appears comes in the same way. Small things (menus) quickly, larger
+       ones (dialogs, panels, the tray, search) a little slower, toasts the slowest; anything
+       leaving goes quicker than it came. Reduced motion makes them all instant. */
+    --motion-fast: 120ms;
+    --motion: 200ms;
+    --motion-slow: 320ms;
+    --motion-out: 140ms;
+    --ease-in: cubic-bezier(.4, 0, 1, 1);
 
     --control-h: 2rem;
     --control-h-sm: 1.75rem;
@@ -81,6 +89,10 @@
     --leading-tight: 1rem;
     --weight: 440;
     --weight-strong: 530;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root { --motion-fast: 1ms; --motion: 1ms; --motion-slow: 1ms; --motion-out: 1ms; }
   }
 
   :root[data-theme="light"] { color-scheme: light; }

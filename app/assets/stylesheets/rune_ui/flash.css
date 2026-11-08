@@ -15,12 +15,12 @@
     z-index: var(--toast-z, 60); width: min(24rem, 100vw - 2 * var(--s-3)); pointer-events: none;
   }
   /* A toast slides in from the side and eases to a stop, then fades away softly. */
-  .flashes--toast .flash { pointer-events: auto; background-color: var(--panel); box-shadow: var(--shadow-popover, 0 8px 24px rgb(0 0 0 / .12)); animation: rune-toast-in .36s cubic-bezier(.22, 1, .36, 1); }
+  .flashes--toast .flash { pointer-events: auto; background-color: var(--panel); box-shadow: var(--shadow-popover, 0 8px 24px rgb(0 0 0 / .12)); animation: rune-toast-in var(--motion-slow) var(--ease); }
   .flashes--toast .flash--notice { background-image: linear-gradient(color-mix(in srgb, var(--ok) 8%, transparent), color-mix(in srgb, var(--ok) 8%, transparent)); }
   .flashes--toast .flash--alert { background-image: linear-gradient(color-mix(in srgb, var(--danger) 8%, transparent), color-mix(in srgb, var(--danger) 8%, transparent)); }
   .flashes--toast .flash--info { background-image: linear-gradient(color-mix(in srgb, var(--accent) 7%, transparent), color-mix(in srgb, var(--accent) 7%, transparent)); }
   .flashes--toast .flash--attention { background-image: linear-gradient(color-mix(in srgb, var(--attention) 9%, transparent), color-mix(in srgb, var(--attention) 9%, transparent)); }
-  .flashes--toast .flash.is-leaving { opacity: 0; transform: scale(.97); transition: opacity .5s ease, transform .5s ease; }
+  .flashes--toast .flash.is-leaving { opacity: 0; transform: scale(.97); transition: opacity var(--motion-slow) var(--ease-in), transform var(--motion-slow) var(--ease-in); }
   @keyframes rune-toast-in { from { opacity: 0; transform: translateX(calc(100% + var(--s-3) + env(safe-area-inset-right))); } }
   @media (prefers-reduced-motion: reduce) {
     .flashes--toast .flash { animation: rune-toast-fade .2s ease-out; }
