@@ -5,6 +5,8 @@
   .flash--alert { background: color-mix(in srgb, var(--danger) 8%, var(--panel)); border-color: color-mix(in srgb, var(--danger) 30%, transparent); }
   .flash--info { background: color-mix(in srgb, var(--accent) 7%, var(--panel)); border-color: color-mix(in srgb, var(--accent) 28%, transparent); }
   .flash--attention { background: color-mix(in srgb, var(--attention) 9%, var(--panel)); border-color: color-mix(in srgb, var(--attention) 32%, transparent); }
+  .flash__text { flex: 1; min-width: 0; }
+  .flash__action-form { display: flex; flex: none; }
   .flash.is-leaving { opacity: 0; transform: translateY(-4px); transition: opacity .25s, transform .25s; }
 
   /* Toasts (flash_messages toast: true): a stack in the bottom right, above the page, each a solid

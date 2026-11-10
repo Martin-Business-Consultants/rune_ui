@@ -136,19 +136,42 @@ module RuneUi
       # Notices and alerts. toast: true floats them in the bottom right as toasts, out of the page's
       # flow, so a message never pushes the page down (lift them with --toast-bottom, e.g. above
       # buttons in that corner). A notice goes by itself after six seconds; an alert stays.
+      #
+      # A message may carry an action, a button beside its text (Undo): give the flash a hash,
+      #   flash.now[:notice] = { text: "Removed.", action: { label: "Undo", url: undo_path, method: :delete }, timeout: 8000 }
+      # (string keys work too, so it survives a redirect). The action is a button_to; data: goes on
+      # its form. timeout: how long it stays, in ms (0 stays until closed).
       def flash_messages(toast: false)
         messages = { notice: flash[:notice], alert: flash[:alert] }.compact_blank
         return if messages.empty?
 
         tag.div(class: [ "flashes", ("flashes--toast" if toast) ].compact.join(" ")) do
-          safe_join(messages.map do |kind, text|
+          safe_join(messages.map do |kind, message|
+            text, action, timeout = flash_parts(kind, message)
             tag.div(class: "flash flash--#{kind}", role: (kind == :alert ? "alert" : "status"),
-                    data: { controller: "rune-flash", rune_flash_timeout_value: (kind == :notice ? 6000 : 0) }) do
-              tag.span(text) + icon_button(:close, label: "Dismiss", class: "flash__close", data: { action: "rune-flash#close" })
+                    data: { controller: "rune-flash", rune_flash_timeout_value: timeout }) do
+              safe_join([ tag.span(text, class: "flash__text"), (flash_action(action) if action),
+                          icon_button(:close, label: "Dismiss", class: "flash__close", data: { action: "rune-flash#close" }) ].compact)
             end
           end)
         end
       end
+
+      def flash_parts(kind, message)
+        default = kind == :notice ? 6000 : 0
+        return [ message, nil, default ] unless message.is_a?(Hash)
+
+        message = message.with_indifferent_access
+        [ message[:text], message[:action], message[:timeout] || default ]
+      end
+      private :flash_parts
+
+      def flash_action(action)
+        action = action.with_indifferent_access
+        button_to action[:label], action[:url], method: action[:method] || :post, params: action[:params] || {},
+          class: "btn btn--secondary btn--sm flash__action", form_class: "flash__action-form", form: { data: action[:data] || {} }
+      end
+      private :flash_action
 
       # ⌘K: everything the person can go to, filtered as they type. items: hashes of label:,
       # url:, and optionally sub:, kind:, icon: or letter: (a letter avatar), default: true
